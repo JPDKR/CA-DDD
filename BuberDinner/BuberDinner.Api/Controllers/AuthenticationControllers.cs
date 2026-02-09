@@ -16,10 +16,10 @@ public class AuthenticationControllers(IAuthenticationService authenticationServ
         var result = _authenticationService.Register(request.FirstName, request.LastName, request.Email, request.Password);
 
         var response = new AuthenticationResponse(
-            result.Id,
-            result.FirstName,
-            result.LastName,
-            result.Email,
+            result.User.Id,
+            result.User.FirstName,
+            result.User.LastName,
+            result.User.Email,
             result.Token
         );
 
@@ -32,10 +32,10 @@ public class AuthenticationControllers(IAuthenticationService authenticationServ
         var result = _authenticationService.Login(request.Email, request.Password);
 
         var response = new AuthenticationResponse(
-            result.Id,
-            result.FirstName,
-            result.LastName,
-            result.Email,
+            result.User.Id,
+            result.User.FirstName,
+            result.User.LastName,
+            result.User.Email,
             result.Token
         );
 
