@@ -21,6 +21,8 @@ var app = builder.Build();
     //    return Results.Problem();
     // });
     app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.MapControllers();
     app.Run();
 }
