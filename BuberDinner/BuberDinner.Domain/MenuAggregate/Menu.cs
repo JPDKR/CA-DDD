@@ -1,3 +1,7 @@
+// <copyright file="Menu.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using BuberDinner.Domain.Common.Models;
 using BuberDinner.Domain.Common.ValueObjects;
 using BuberDinner.Domain.Dinner.ValueObjects;
@@ -15,18 +19,24 @@ public sealed class Menu : AggregateRoot<MenuId>
     private readonly List<MenuReviewId> _menuReviewIds = [];
     public string Name { get; }
     public string Description { get; }
-    public AverageRating AverageRating { get; }
+    public AverageRating? AverageRating { get; }
 
     public IReadOnlyList<MenuSection> Sections => _sections.AsReadOnly();
 
     public HostId HostId { get; }
     public IReadOnlyList<DinnerId> DinnerIds => _dinnerIds.AsReadOnly();
-    private IReadOnlyList<MenuReviewId> MenuReviewIds = [];
+    public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds.AsReadOnly();
 
     public DateTime CreatedDateTime { get; }
     public DateTime UpdatedDateTime { get; }
 
-    private Menu(MenuId id, HostId hostId, string name, string description, DateTime createdDateTime, DateTime updatedDateTime) : base(id)
+    private Menu(
+        MenuId id,
+        HostId hostId,
+        string name,
+        string description,
+        DateTime createdDateTime,
+        DateTime updatedDateTime) : base(id)
     {
         HostId = hostId;
         Name = name;
@@ -35,7 +45,7 @@ public sealed class Menu : AggregateRoot<MenuId>
         UpdatedDateTime = updatedDateTime;
     }
 
-    public static Menu Create(HostId hostId, string name, string description)
+    public static Menu Create(string name, string description, HostId hostId)
     {
         return new Menu(MenuId.CreateUnique(), hostId, name, description, DateTime.UtcNow, DateTime.UtcNow);
     }

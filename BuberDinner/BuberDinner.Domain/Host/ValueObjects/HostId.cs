@@ -13,7 +13,7 @@ public sealed class HostId : ValueObject
 
     public static HostId CreateUnique()
     {
-        return new HostId(Guid.NewGuid());
+        return new (Guid.NewGuid());
     }
 
     public override IEnumerable<object> GetEqualityComponents()
