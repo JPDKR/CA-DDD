@@ -25,4 +25,6 @@ public sealed class MenuId : AggregateRootId<Guid>
     {
         yield return Value;
     }
+
+    private MenuId() { }
 }
