@@ -6,6 +6,7 @@ using BuberDinner.Domain.Menus;
 using BuberDinner.Infrastructure.Authentication;
 using BuberDinner.Infrastructure.Persistance;
 using BuberDinner.Infrastructure.Persistance.Repositories;
+using BuberDinner.Infrastructure.Persistence.Interceptors;
 using BuberDinner.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ public static class DependencyInjection
     {
         services.AddDbContext<BuberDinnerCbContext>(options => options
             .UseSqlServer("Server=localhost;Database=BuberDinner;User Id=sa;Password=YourMom_123;TrustServerCertificate=true"));
+        services.AddScoped<PublishDomainEventsInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IMenuRepository, MenuRepository>();
 
