@@ -1,17 +1,11 @@
-// <copyright file="CreateMenuCommand.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using BuberDinner.Domain.Menu;
-
+using BuberDinner.Domain.Menus;
 using ErrorOr;
-
 using MediatR;
 
 namespace BuberDinner.Application.Menus.Commands.CreateMenu;
 
 public record CreateMenuCommand(
-    string HostId,
+    Guid HostId,
     string Name,
     string Description,
     List<MenuSectionCommand> Sections) : IRequest<ErrorOr<Menu>>;

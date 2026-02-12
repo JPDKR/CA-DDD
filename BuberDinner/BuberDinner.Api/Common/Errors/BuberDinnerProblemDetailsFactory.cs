@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using BuberDinner.Api.Common.Http;
+using BuberDinner.Api.Http;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -8,14 +8,9 @@ using Microsoft.Extensions.Options;
 
 namespace BuberDinner.Api.Common.Errors;
 
-public class BuberDinnerProblemDetailsFactory : ProblemDetailsFactory
+public class BuberDinnerProblemDetailsFactory(IOptions<ApiBehaviorOptions> options) : ProblemDetailsFactory
 {
-    private readonly ApiBehaviorOptions _options;
-
-    public BuberDinnerProblemDetailsFactory(IOptions<ApiBehaviorOptions> options)
-    {
-        _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
-    }
+    private readonly ApiBehaviorOptions _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
 
     public override ProblemDetails CreateProblemDetails(
         HttpContext httpContext,
@@ -34,28 +29,37 @@ public class BuberDinnerProblemDetailsFactory : ProblemDetailsFactory
             Instance = instance
         };
 
+        ApplyProblemDetailsDefaults(httpContext, problemDetails, statusCode!.Value);
+
         return problemDetails;
     }
 
     public override ValidationProblemDetails CreateValidationProblemDetails(
-        HttpContext httpContext, 
-        ModelStateDictionary modelStateDictionary, 
-        int? statusCode = null, 
-        string? title = null, 
-        string? type = null, 
-        string? detail = null, 
+        HttpContext httpContext,
+        ModelStateDictionary modelStateDictionary,
+        int? statusCode = null,
+        string? title = null,
+        string? type = null,
+        string? detail = null,
         string? instance = null)
     {
-        statusCode ??= 500;
+        ArgumentNullException.ThrowIfNull(modelStateDictionary);
+
+        statusCode ??= 400;
 
         var problemDetails = new ValidationProblemDetails(modelStateDictionary)
         {
             Status = statusCode,
-            Title = title ?? "One or more validation errors occurred.",
-            Type = type ?? "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+            Type = type,
             Detail = detail,
-            Instance = instance
+            Instance = instance,
         };
+
+        if (title != null)
+        {
+            // For validation problem details, don't overwrite the default title with null.
+            problemDetails.Title = title;
+        }
 
         ApplyProblemDetailsDefaults(httpContext, problemDetails, statusCode.Value);
 
@@ -78,9 +82,10 @@ public class BuberDinnerProblemDetailsFactory : ProblemDetailsFactory
             problemDetails.Extensions["traceId"] = traceId;
         }
 
-        if (httpContext.Items[HttpContextItemKeys.Errors] is List<Error> errors)
+        var errors = httpContext?.Items[HttpContextItemKeys.Errors] as List<Error>;
+        if (errors is not null)
         {
-            problemDetails.Extensions["errorCodes"] = errors.Select(e => e.Code).ToArray();
+            problemDetails.Extensions.Add("errorCodes", errors.Select(e => e.Code));
         }
     }
 }

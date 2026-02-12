@@ -1,14 +1,10 @@
-// <copyright file="MenuMappingConfig.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 using BuberDinner.Application.Menus.Commands.CreateMenu;
 using BuberDinner.Contracts.Menus;
-using BuberDinner.Domain.Menu;
+using BuberDinner.Domain.Menus;
 using Mapster;
 
-using MenuSection = BuberDinner.Domain.Menu.Entities.MenuSection;
-using MenuItem = BuberDinner.Domain.Menu.Entities.MenuItem;
+using MenuSection = BuberDinner.Domain.Menus.Entities.MenuSection;
+using MenuItem = BuberDinner.Domain.Menus.Entities.MenuItem;
 
 namespace BuberDinner.Api.Common.Mapping;
 
@@ -16,8 +12,8 @@ public class MenuMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<(CreateMenuRequest request, string hostId), CreateMenuCommand>()
-            .Map(dest => dest.Name, src => src.request.Name)
+        config.NewConfig<(CreateMenuRequest request, Guid hostId), CreateMenuCommand>()
+            .Map(dest => dest.HostId, src => src.hostId)
             .Map(dest => dest, src => src.request);
 
         config.NewConfig<Menu, MenuResponse>()

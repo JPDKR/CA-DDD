@@ -1,12 +1,8 @@
-// <copyright file="CreateMenuCommandHandler.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
+using BuberDinner.Application.Common.Interfaces.Persistance;
 using BuberDinner.Domain.Hosts.ValueObjects;
-using BuberDinner.Domain.Menu;
-using BuberDinner.Domain.Menu.Entities;
+using BuberDinner.Domain.Menus;
+using BuberDinner.Domain.Menus.Entities;
 using ErrorOr;
-
 using MediatR;
 
 namespace BuberDinner.Application.Menus.Commands.CreateMenu;
@@ -19,18 +15,18 @@ public class CreateMenuCommandHandler(IMenuRepository menuRepository) : IRequest
         await Task.CompletedTask;
 
         var menu = Menu.Create(
+            hostId: HostId.Create(request.HostId),
             name: request.Name,
             description: request.Description,
-            hostId: HostId.Create(request.HostId),
-            sections: request.Sections.ConvertAll(section => MenuSection.Create(
-                name: section.Name,
-                description: section.Description,
-                section.Items.ConvertAll(item => MenuItem.Create(
-                    name: item.Name,
-                    description: item.Description)))));
+            sections: request.Sections.ConvertAll(sections => MenuSection.Create(
+                name: sections.Name,
+                description: sections.Description,
+                items: sections.Items.ConvertAll(items => MenuItem.Create(
+                    name: items.Name,
+                    description: items.Description)))));
 
         _menuRepository.Add(menu);
 
-        return default!;
+        return menu;
     }
 }

@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace BuberDinner.Domain.Menu;
+namespace BuberDinner.Domain.Menus;
 
 public interface IMenuRepository
 {

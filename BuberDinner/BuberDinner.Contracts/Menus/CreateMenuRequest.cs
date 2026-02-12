@@ -1,7 +1,3 @@
-// <copyright file="CreateMenuRequest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace BuberDinner.Contracts.Menus;
 
 public record CreateMenuRequest(

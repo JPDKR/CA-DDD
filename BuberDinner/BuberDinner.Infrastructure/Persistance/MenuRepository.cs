@@ -1,6 +1,7 @@
-using BuberDinner.Domain.Menu;
+using BuberDinner.Application.Common.Interfaces.Persistance;
+using BuberDinner.Domain.Menus;
 
-namespace BuberDinner.Infrastructure.Persistance;
+namespace BuberDinner.Infrastructure.Persistance.Repositories;
 
 public class MenuRepository : IMenuRepository
 {
