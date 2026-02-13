@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BuberDinner.Infrastructure.Migrations
 {
-    [DbContext(typeof(BuberDinnerCbContext))]
+    [DbContext(typeof(BuberDinnerDbContext))]
     [Migration("20260212155823_SecondIsBest")]
     partial class SecondIsBest
     {

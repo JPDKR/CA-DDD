@@ -44,4 +44,8 @@ public sealed class Bill : AggregateRoot<BillId, Guid>
             DateTime.UtcNow,
             DateTime.UtcNow);
     }
+
+#pragma warning disable CS8618
+    private Bill() { }
+#pragma warning restore CS8618
 }

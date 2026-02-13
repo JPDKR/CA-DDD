@@ -1,9 +1,8 @@
 using System.Reflection;
-using BuberDinner.Api.Common.Mapping;
 using Mapster;
 using MapsterMapper;
 
-namespace BuberDinner.Api.Common.Filters;
+namespace BuberDinner.Api.Common.Mapping;
 
 public static class DependencyInjection
 {

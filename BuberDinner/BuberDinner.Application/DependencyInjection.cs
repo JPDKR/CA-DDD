@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using System.Reflection;
 
 namespace BuberDinner.Application;
 
@@ -16,7 +17,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);   
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());   
         return services;
     }
 }

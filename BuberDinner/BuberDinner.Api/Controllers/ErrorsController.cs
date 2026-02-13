@@ -11,12 +11,12 @@ public class ErrorController : ControllerBase
     {
         Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
 
-        var (statusCode, title) = exception switch
-        {
-            IServiceException serviceException => ((int)serviceException.StatusCode, serviceException.ErrorMessage),
-            _ => (StatusCodes.Status500InternalServerError, "An error occurred while processing your request.")
-        };
+        // var (statusCode, title) = exception switch
+        // {
+        //     IServiceException serviceException => ((int)serviceException.StatusCode, serviceException.ErrorMessage),
+        //     _ => (StatusCodes.Status500InternalServerError, "An error occurred while processing your request.")
+        // };
 
-        return Problem(statusCode: statusCode, title: title);
+        return Problem();
     }
 }

@@ -19,7 +19,7 @@ namespace BuberDinner.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddAuth(configuration)
@@ -31,7 +31,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddPersistance(this IServiceCollection services)
     {
-        services.AddDbContext<BuberDinnerCbContext>(options => options
+        services.AddDbContext<BuberDinnerDbContext>(options => options
             .UseSqlServer("Server=localhost;Database=BuberDinner;User Id=sa;Password=YourMom_123;TrustServerCertificate=true"));
         services.AddScoped<PublishDomainEventsInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
@@ -40,7 +40,7 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddAuth(this IServiceCollection services, ConfigurationManager configuration)
+    public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
         var jwtSettings = new JwtSettings();
         configuration.Bind(JwtSettings.SectionName, jwtSettings);

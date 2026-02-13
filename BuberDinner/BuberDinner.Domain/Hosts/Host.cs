@@ -61,4 +61,8 @@ public sealed class Host : AggregateRoot<HostId, Guid>
             DateTime.UtcNow,
             DateTime.UtcNow);
     }
+
+#pragma warning disable CS8618
+    private Host() { }
+#pragma warning restore CS8618
 }

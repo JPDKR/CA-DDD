@@ -13,7 +13,7 @@ public sealed class MenuId : AggregateRootId<Guid>
 
     public static MenuId CreateUnique()
     {
-        return new MenuId(Guid.NewGuid());
+        return new (Guid.NewGuid());
     }
 
     public static MenuId Create(Guid value)

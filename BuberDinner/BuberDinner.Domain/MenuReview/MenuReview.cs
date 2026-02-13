@@ -56,4 +56,8 @@ public sealed class MenuReview : AggregateRoot<MenuReviewId, Guid>
             DateTime.UtcNow,
             DateTime.UtcNow);
     }
+
+#pragma warning disable CS8618
+    private MenuReview() { }
+#pragma warning restore CS8618
 }

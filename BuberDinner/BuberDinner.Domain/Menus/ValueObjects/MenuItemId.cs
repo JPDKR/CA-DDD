@@ -13,7 +13,7 @@ public sealed class MenuItemId : ValueObject
 
     public static MenuItemId CreateUnique()
     {
-        return new MenuItemId(Guid.NewGuid());
+        return new (Guid.NewGuid());
     }
 
     public static MenuItemId Create(Guid value)

@@ -3,13 +3,13 @@ using BuberDinner.Domain.Menus;
 
 namespace BuberDinner.Infrastructure.Persistance.Repositories;
 
-public class MenuRepository(BuberDinnerCbContext context) : IMenuRepository
+public class MenuRepository(BuberDinnerDbContext context) : IMenuRepository
 {
-    private readonly BuberDinnerCbContext _context = context;
+    private readonly BuberDinnerDbContext _context = context;
+
     public void Add(Menu menu)
     {
         _context.Add(menu);
-
         _context.SaveChanges();
     }
 }
